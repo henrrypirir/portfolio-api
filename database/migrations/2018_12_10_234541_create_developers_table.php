@@ -15,6 +15,15 @@ class CreateDevelopersTable extends Migration
     {
         Schema::create('developers', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->char('label');
+            $table->string('phone');
+            $table->string('website');
+            $table->text('summary');
+            $table->string('address');
+            $table->char('region');
+            $table->char('city');
             $table->timestamps();
         });
     }
