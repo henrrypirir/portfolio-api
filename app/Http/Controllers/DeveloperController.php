@@ -50,8 +50,11 @@ class DeveloperController extends Controller
     }
 
 
+    // VALIDAR CON TOKEN SI ESTE PERTENECE AL USUARIO QUE SE DESEA ELIMINAR
     public function destroy(Developer $developer)
     {
-        //
+      $developer = Developer::findorfail($developer->id);
+      $developer->user->delete();
+      return new DeveloperResource($developer);
     }
 }
