@@ -14,3 +14,4 @@ use Illuminate\Http\Request;
 */
 
 Route::apiResource('projects', 'ProjectController');
+Route::put('projects/', 'ProjectController@store');

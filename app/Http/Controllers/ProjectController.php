@@ -16,6 +16,12 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
+      if ($request->isMethod('PUT')) {
+        $project = Project::findOrFail($request->id);
+      }else {
+        $project = new Project;
+      }
+
       $title = $request->input('title');
       $description = $request->input('description');
       $website = $request->input('website');
@@ -23,22 +29,23 @@ class ProjectController extends Controller
       $published_at = $request->input('published_at');
       $technologies = $request->input('technologies');
 
-      $project = new Project;
-      $project->title = $title;
-      $project->description = $description;
-      $project->website = $website;
-      $project->country = $country;
-      $project->published_at = $published_at;
+      $project->title = $title ? $title : $project->title;
+      $project->description = $description ? $description : $project->description;
+      $project->website = $website ? $website : $project->website;
+      $project->country = $country ? $country : $project->country;
+      $project->published_at = $published_at ? $published_at : $project->published_at;
 
       $project->save();
 
       if ($technologies) {
         $skills = [];
         foreach ($technologies as $tech) {
-          $skills = $tech['id'];
+          $skills[] = $tech['id'];
         }
         $project->skills()->sync($skills);
       }
+
+      return $project;
 
     }
 
