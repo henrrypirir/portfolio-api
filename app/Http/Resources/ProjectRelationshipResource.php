@@ -15,6 +15,7 @@ class ProjectRelationshipResource extends JsonResource
     public function toArray($request)
     {
       return [
+          'developer' => (new DeveloperResource($this->developer)),
           'skills' => (new ProjectSkillsRelationshipResource($this->skills)),
       ];
     }
