@@ -23,7 +23,7 @@ class CreateDevelopersTable extends Migration
             $table->text('summary');
             $table->string('address');
             $table->char('region');
-            $table->char('city');
+            $table->char('country');
             $table->timestamps();
         });
     }
