@@ -12,6 +12,15 @@ class DeveloperController extends Controller
 
     public function store(Request $request)
     {
+      if ($request->isMethod("PUT")) {
+        // VALIDAR POR TOKEN QUE ESTE PERTENEZCA AL QUE QUIERE ACTUALIZAR
+        $developer = Developer::findOrFail($request->id);
+        $user = $developer->user;
+      }else {
+        $user = new User;
+        $developer = new Developer;
+      }
+
       $label = $request->input('label');
       $phone = $request->input('phone');
       $website = $request->input('website');
@@ -23,19 +32,17 @@ class DeveloperController extends Controller
       $email = $request->input('user.email');
       $password = bcrypt($request->input('user.password'));
 
-      $user = new User;
-      $user->name = $username;
-      $user->email = $email;
-      $user->password = $password;
+      $user->name = $username ? $username : $user->name;
+      $user->email = $email ? $email : $user->email;
+      $user->password = $password ? $password : $user->password;
 
-      $developer = new Developer;
-      $developer->label = $label;
-      $developer->phone = $phone;
-      $developer->website = $website;
-      $developer->summary = $summary;
-      $developer->address = $address;
-      $developer->region = $region;
-      $developer->country = $country;
+      $developer->label = $label ? $label : $developer->label;
+      $developer->phone = $phone ? $phone : $developer->phone;
+      $developer->website = $website ? $website : $developer->website;
+      $developer->summary = $summary ? $summary : $developer->summary;
+      $developer->address = $address ? $address : $developer->address;
+      $developer->region = $region ? $region : $developer->region;
+      $developer->country = $country ? $country : $developer->country;
 
       if($user->save() && $user->developer()->save($developer)){
         return new DeveloperResource($developer);

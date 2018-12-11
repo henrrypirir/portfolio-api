@@ -18,3 +18,4 @@ use Illuminate\Http\Request;
 // });
 
 Route::apiResource('developers', 'DeveloperController');
+Route::put('developers/', 'DeveloperController@store');
