@@ -8,16 +8,6 @@ use Illuminate\Http\Request;
 
 class DeveloperController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // public function index()
-    // {
-    //     //
-    // }
-
 
     public function store(Request $request)
     {
@@ -51,28 +41,14 @@ class DeveloperController extends Controller
       }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \Server\Developer  $developer
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Developer $developer)
     {
-        //
+        $developer = Developer::findorfail($developer);
+        return $developer;
     }
 
-    public function update(Request $request, Developer $developer)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Server\Developer  $developer
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Developer $developer)
     {
         //
