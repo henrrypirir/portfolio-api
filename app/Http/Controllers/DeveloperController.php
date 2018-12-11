@@ -4,6 +4,7 @@ namespace Server\Http\Controllers;
 
 use Server\User;
 use Server\Developer;
+use Server\Http\Resources\DeveloperResource;
 use Illuminate\Http\Request;
 
 class DeveloperController extends Controller
@@ -37,15 +38,15 @@ class DeveloperController extends Controller
       $developer->country = $country;
 
       if($user->save() && $user->developer()->save($developer)){
-        print("Usuario y Desarrollador guadado");
+        return new DeveloperResource($developer);
       }
     }
 
 
     public function show(Developer $developer)
     {
-        $developer = Developer::findorfail($developer);
-        return $developer;
+        $developer = Developer::findorfail($developer->id);
+        return new DeveloperResource($developer);
     }
 
 
