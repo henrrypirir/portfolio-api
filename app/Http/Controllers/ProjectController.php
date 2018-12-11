@@ -40,6 +40,11 @@ class ProjectController extends Controller
         $country = $request->input('country');
         $published_at = $request->input('published_at');
         $technologies = $request->input('technologies');
+        /*
+        Get developer by Token in headers
+        $developer = Developer::findOrFail(token);
+        */
+        $developer = $request->input('developer');
 
         $project->title = $title ? $title : $project->title;
         $project->description = $description ? $description : $project->description;
@@ -47,7 +52,7 @@ class ProjectController extends Controller
         $project->country = $country ? $country : $project->country;
         $project->published_at = $published_at ? $published_at : $project->published_at;
 
-        if ($project->save()) {
+        if ($project->developer()->associate($developer) && $project->save()) {
           if ($technologies) {
             $skills = [];
             foreach ($technologies as $tech) {

@@ -11,4 +11,9 @@ class Developer extends Model
   {
       return $this->belongsTo('Server\User', 'user_id');
   }
+
+  public function projects()
+  {
+      return $this->hasMany('Server\Project');
+  }
 }

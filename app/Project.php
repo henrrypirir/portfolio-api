@@ -11,4 +11,9 @@ class Project extends Model
     {
       return $this->belongsToMany('Server\Skill', 'project_skill');
     }
+
+    public function developer()
+    {
+        return $this->belongsTo('Server\Developer', 'developer_id');
+    }
 }
