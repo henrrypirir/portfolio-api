@@ -39,13 +39,14 @@ class ProjectController extends Controller
         }
         $project->skills()->sync($skills);
       }
-      
+
     }
 
 
     public function show(Project $project)
     {
-        //
+        $project = Project::findOrFail($project);
+        return $project;
     }
 
 
