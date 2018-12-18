@@ -3,18 +3,20 @@
 namespace Server\Http\Controllers;
 
 use Server\Skill;
+use Server\Http\Resources\SkillsCollection;
 use Illuminate\Http\Request;
 
 class SkillController extends Controller
 {
-    /**
+
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+      $skills = Skill::all();
+      return new SkillsCollection($skills);
     }
 
     /**
