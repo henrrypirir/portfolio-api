@@ -62,16 +62,10 @@ class SkillController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Server\Skill  $skill
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Skill $skill)
+    public function show(Skill $skill)
     {
-        //
+      $skill = Skill::findOrFail($skill->id);
+      return new SkillResource($skill);
     }
 
     /**
