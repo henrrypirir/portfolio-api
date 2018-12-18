@@ -21,4 +21,6 @@ Route::apiResource('developers', 'DeveloperController');
 Route::put('developers/', 'DeveloperController@store');
 Route::apiResource('projects', 'ProjectController');
 Route::put('projects/', 'ProjectController@store');
+Route::apiResource('skills', 'SkillController');
+Route::put('skills', 'SkillController@store');
 Route::get('/search', 'SearchController@filters');
