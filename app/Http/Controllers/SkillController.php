@@ -68,14 +68,10 @@ class SkillController extends Controller
       return new SkillResource($skill);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Server\Skill  $skill
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Skill $skill)
     {
-        //
+      // validar con Token
+      $skill->delete();
+      return new SkillResource($skill);
     }
 }
