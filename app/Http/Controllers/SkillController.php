@@ -3,63 +3,33 @@
 namespace Server\Http\Controllers;
 
 use Server\Skill;
+use Server\Http\Resources\SkillResource;
 use Server\Http\Resources\SkillsCollection;
 use Illuminate\Http\Request;
 
 class SkillController extends Controller
 {
 
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
       $skills = Skill::all();
       return new SkillsCollection($skills);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
-    }
+        //validar con token
+        if ($request->isMethod('PUT')) {
+          $skill = Skill::findOrFail($request->id);
+        }else{
+          $skill = new Skill;
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \Server\Skill  $skill
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Skill $skill)
-    {
-        //
-    }
+        $name = $request->input('name');
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Server\Skill  $skill
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Skill $skill)
-    {
-        //
+        $skill->name = $name ? $name : $skill->name;
+        $skill->save();
+        return new SkillResource($skill);
     }
 
     public function show(Skill $skill)
