@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class SkillController extends Controller
 {
+    public function __construct(Skill $skill)
+    {
+      $this->middleware('auth:api', ['except' => ['index', 'show'] ]);
+    }
 
     public function index()
     {
