@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class DeveloperController extends Controller
 {
+    public function __construct(Developer $developer)
+    {
+      $this->middleware('auth:api', ['except' => ['show'] ]);
+    }
 
     public function store(Request $request)
     {
@@ -17,7 +21,7 @@ class DeveloperController extends Controller
 
         if ($request->isMethod("PUT")) {
           // VALIDAR POR TOKEN QUE ESTE PERTENEZCA AL QUE QUIERE ACTUALIZAR
-          $developer = Developer::findOrFail($request->id);
+          $developer = Developer::where('user_id', $request->user()->id)->first();
           $user = $developer->user;
         }else {
           $user = new User;
@@ -71,12 +75,16 @@ class DeveloperController extends Controller
 
 
     // VALIDAR CON TOKEN SI ESTE PERTENECE AL USUARIO QUE SE DESEA ELIMINAR
-    public function destroy(Developer $developer)
+    public function destroy(Request $request, Developer $developer)
     {
+      //developer del usuario == developer del Id enviado
       try {
-        $developer = Developer::findorfail($developer->id);
-        $developer->user->delete();
-        return new DeveloperResource($developer);
+        $developer_user = Developer::where('user_id', $request->user()->id)->first();
+        if ($developer == $developer_user) {
+          $developer->user->delete();
+          return new DeveloperResource($developer);
+        }
+        return Response()->json(["developer"=>"You don't have permission to delete this developer"], 403);
       } catch (\Exception $e) {
         Log::critical("Could not delete developer: {$e->getCode()}, {$e->getLine()} , {$e->getMessage()}");
         return Response()->json(["developer"=>"Something was wrong"], 500);
