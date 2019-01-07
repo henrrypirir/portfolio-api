@@ -12,7 +12,7 @@ class DeveloperController extends Controller
 {
     public function __construct(Developer $developer)
     {
-      $this->middleware('auth:api', ['except' => ['show'] ]);
+      $this->middleware('auth:api', ['except' => ['show', 'store'] ]);
     }
 
     public function store(Request $request)
