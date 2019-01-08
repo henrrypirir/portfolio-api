@@ -10,3 +10,8 @@ puedes ejecutar desde tu linea de comandos **heroku run php artisan route:list**
 
 - **Hosting:** https://www.heroku.com/
 - **Base de Datos:** https://db4free.net/
+
+
+## TOMAR EN CUENTA
+
+El usario y contraseña de la Base de datos se encuentran dentro de los archivos del repositorio, al igual las keys que se utilizan con laravel/passport, por lo tanto no guardes información sensible, ni personal, ni de la corporación con que trabajaste, esta herramienta es unicamente informativa y para uso de cualquier persona con accesso ilimitado a la información.
